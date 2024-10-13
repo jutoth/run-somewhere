@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgis/postgis:13-3.1-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: geodb
+      POSTGRES_USER: geo
+      POSTGRES_PASSWORD: geo
+    ports:
+      - "5432:5432"
+
+  geoserver:
+    image: docker.osgeo.org/geoserver:2.26.x
+    container_name: geoserver
+    environment:
+      - GEOSERVER_ADMIN_USER=admin
+      - GEOSERVER_ADMIN_PASSWORD=geoserver
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
